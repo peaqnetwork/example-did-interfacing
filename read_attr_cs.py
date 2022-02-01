@@ -6,8 +6,9 @@ from substrateinterface.utils import hasher
 from scalecodec.base import ScaleBytes, RuntimeConfiguration
 from scalecodec.type_registry import load_type_registry_preset
   
-
-acc_pk = bytearray.fromhex("6031188a7c447201a20c044b5e93a6857683a0186a2e02c799974c94a6e4331d")
+#subkey inspect "//Alice"
+#acc_pk = bytearray.fromhex("6031188a7c447201a20c044b5e93a6857683a0186a2e02c799974c94a6e4331d")
+acc_pk = bytearray.fromhex("d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d")
 print("acc_pk: {}".format(binascii.hexlify(acc_pk)))
 
 attr_to_read = bytes("id",encoding='utf8')
@@ -20,7 +21,8 @@ hashed_val_of_key_in_map = hasher.blake2_256(data_to_hash)
 print("unhashed key for map: [{}]".format(hashed_val_of_key_in_map))
 
 substrate = SubstrateInterface(
-    url='ws://127.0.0.1:9944',
+    # url='ws://127.0.0.1:9944',
+    url='wss://fn1.test.peaq.network',
 )
 
 pallet_hash = hasher.xxh128("PeaqDid")
@@ -36,8 +38,6 @@ print("key_hash [{}]".format(key_hash))
 
 storage_key = pallet_hash +  storage_hash + key_hash
 print("storage_key: [{}]".format(storage_key))
-
-print(hasher.blake2_128_concat(bytearray.fromhex("d43593c715fdd31c61141abd04a99fd6822c8558854ccde39a5684e7a56da27d")))
 
 result = substrate.get_storage_by_key(
     None,
